@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<div class="container">
+<h2>Edit</h2>
+<form method="POST" action="/update/{{data.id}}">
+<input name="title" value="{{data.title}}">
+<input name="amount" type="number" value="{{data.amount}}">
+<input name="category" value="{{data.category}}">
+<input name="date" type="date" value="{{data.date}}">
+<button>Update</button>
+</form>
+<a href="/">Back</a>
+</div>

@@ -1,0 +1,66 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container">
+
+<h2>Expense Tracker</h2>
+
+<form action="/add" method="POST">
+<input name="title" placeholder="Title">
+<input name="amount" type="number" placeholder="Amount">
+<input name="category" placeholder="Category">
+<input name="date" type="date">
+<button>Add</button>
+</form>
+
+<hr>
+
+<form method="POST">
+<input type="month" name="month">
+<button>Filter</button>
+<a href="/">Reset</a>
+</form>
+
+<table>
+<tr><th>Title</th><th>Amount</th><th>Category</th><th>Date</th><th>Action</th></tr>
+
+{% for d in data %}
+<tr>
+<td>{{d.title}}</td>
+<td>{{d.amount}}</td>
+<td>{{d.category}}</td>
+<td>{{d.date}}</td>
+<td>
+<a href="/delete/{{d.id}}">Delete</a>
+<a href="/edit/{{d.id}}">Edit</a>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+<h3>Total: ₹ {{total}}</h3>
+
+<h3>Chart</h3>
+<canvas id="myChart"></canvas>
+
+<script>
+let labels = [];
+let values = [];
+
+{% for d in data %}
+labels.push("{{d.title}}");
+values.push({{d.amount}});
+{% endfor %}
+
+new Chart(document.getElementById("myChart"), {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{label:'Expenses', data: values}]
+    }
+});
+</script>
+
+<a href="/logout">Logout</a>
+
+</div>
